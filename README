@@ -1,0 +1,19 @@
+This morning I needed to transform textmate snippets bundle into a Gedit format.
+
+I've made this quick and dirty is someone need it.
+
+I'll probably improve it in the future.
+
+*How to use*
+
+Copy your textmate Snippets directory into the tmsnippets2gedit folder, run ruby tmsnippets2gedit.rb
+
+This will convert all you need and create a result.xml file. Edit this file and replace [LANGUAGE] with your language.
+
+*nokogiri*
+
+you'll need nokogiri in order to use this script, so sudo gem install nokogiri
+
+Follow me on twitter http://www.twitter.com/spyou
+My blog www.notgeeklycorrect.com
+
