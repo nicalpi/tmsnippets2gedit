@@ -1,3 +1,7 @@
+#tmsnippets2gedit
+#05 May 2009
+#Quick and dirty code to transform textmate snippets into gedit snippets xml
+
 require 'rubygems'
 require 'nokogiri'
 
@@ -22,7 +26,7 @@ def convert(file)
 
   #Output to Gedit format
   snippet += "  <snippet>\r\n"
-  snippet += "    <tag>#{arrString[arrKey.index('tabTrigger')].gsub!('.','')}</tag>\r\n"
+  snippet += "    <tag>#{arrString[arrKey.index('tabTrigger')].gsub!('.','')}</tag>\r\n" #Need to gsub because Gedit doesn't seem to like dot on the tag
   snippet += "    <description>#{arrString[arrKey.index('name')]}</description>\r\n"
   snippet += "    <text><![CDATA[#{arrString[arrKey.index('content')]}]]></text>\r\n"
   snippet += "  </snippet>\r\n"
@@ -32,6 +36,7 @@ end
 output = ""
 output += "<?xml version='1.0' encoding='utf-8'?>
 <snippets language=\"[LANGUAGE]\">\r\n"
+
 for file in Dir.glob("Snippets/*.tmSnippet")
   puts "Converting #{file} ..."
   output += convert(file)
