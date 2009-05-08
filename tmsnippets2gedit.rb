@@ -24,13 +24,17 @@ def convert(file)
     end
   end
 
-  #Output to Gedit format
-  snippet += "  <snippet>\r\n"
-  snippet += "    <tag>#{arrString[arrKey.index('tabTrigger')].gsub!('.','')}</tag>\r\n" #Need to gsub because Gedit doesn't seem to like dot on the tag
-  snippet += "    <description>#{arrString[arrKey.index('name')]}</description>\r\n"
-  snippet += "    <text><![CDATA[#{arrString[arrKey.index('content')]}]]></text>\r\n"
-  snippet += "  </snippet>\r\n"
-
+  if arrKey.index('tabTrigger')
+    #Output to Gedit format
+    snippet += "  <snippet>\r\n"
+    snippet += "    <tag>#{arrString[arrKey.index('tabTrigger')].gsub!('.','')}</tag>\r\n" #Need to gsub because Gedit doesn't seem to like dot on the tag
+    snippet += "    <description>#{arrString[arrKey.index('name')]}</description>\r\n"
+    snippet += "    <text><![CDATA[#{arrString[arrKey.index('content')]}]]></text>\r\n"
+    snippet += "  </snippet>\r\n"
+  else
+    return ""
+  end
+  return snippet
 end
 
 output = ""
