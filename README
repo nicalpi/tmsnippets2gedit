@@ -17,3 +17,21 @@ you'll need nokogiri in order to use this script, so sudo gem install nokogiri
 Follow me on twitter http://www.twitter.com/spyou
 My blog www.notgeeklycorrect.com
 
+
+
+Example to convert cakephp textame to gedit/pluma snippets
+
+git clone https://github.com/jsenin/tmsnippets2gedit
+sudo gem install ruby ruby-nokogiri
+
+git clone https://github.com/cakephp/cakephp-tmbundle
+cd cakephp-tmbundle
+ruby ../tmsnippets2gedit.rb 
+
+sed -i 's/\[LANGUAGE\]/php/g' result.xml
+sudo cp result.xml /usr/share/pluma/plugins/snippets/php.xml
+
+or 
+
+sudo cp result.xml ~/.config/pluma/snippets/php.xml 
+
