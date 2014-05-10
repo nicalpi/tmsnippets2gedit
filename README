@@ -31,3 +31,7 @@ ruby ../tmsnippets2gedit.rb
 sed -i 's/\[LANGUAGE\]/php/g' result.xml
 sudo cp result.xml /usr/share/pluma/plugins/snippets/php.xml
 
+or 
+
+sudo cp result.xml ~/.config/pluma/snippets/php.xml 
+
