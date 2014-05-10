@@ -7,6 +7,7 @@ require 'nokogiri'
 
 def convert(file)
   xml = File.read(file)
+  
   doc = Nokogiri::XML(xml)
   i = 0
   j = 0
@@ -24,32 +25,44 @@ def convert(file)
     end
   end
 
+puts arrKey.inspect 
+puts arrString.inspect 
   if arrKey.index('tabTrigger')
     #Output to Gedit format
-    snippet += "  <snippet>\r\n"
-    snippet += "    <tag>#{arrString[arrKey.index('tabTrigger')].gsub!('.','')}</tag>\r\n" #Need to gsub because Gedit doesn't seem to like dot on the tag
-    snippet += "    <description>#{arrString[arrKey.index('name')]}</description>\r\n"
-    snippet += "    <text><![CDATA[#{arrString[arrKey.index('content')]}]]></text>\r\n"
-    snippet += "  </snippet>\r\n"
+    snippet += "  <snippet>\n"
+    snippet += "    <tag>#{arrString[arrKey.index('tabTrigger')].gsub('.','')}</tag>\n" #Need to gsub because Gedit doesn't seem to like dot on the tag
+    snippet += "    <description>#{arrString[arrKey.index('name')]}</description>\n"
+    snippet += "    <text><![CDATA[#{arrString[arrKey.index('content')].gsub('\$','$')}]]></text>\n"
+    snippet += "  </snippet>\n"
   else
     return ""
   end
   return snippet
 end
 
-output = ""
-output += "<?xml version='1.0' encoding='utf-8'?>
-<snippets language=\"[LANGUAGE]\">\r\n"
 
-for file in Dir.glob("Snippets/*.tmSnippet")
-  puts "Converting #{file} ..."
-  output += convert(file)
+def snipetDir( dir ) 
+
+	output = ""
+	output += "<?xml version='1.0' encoding='utf-8'?>
+	<snippets language=\"[LANGUAGE]\">\n"
+
+	for file in Dir.glob( dir + "Snippets/*.tmSnippet")
+	  puts "Converting #{file} ..."
+	  output += convert(file)
+	end
+	output += "</snippets>"
+
+	File.open("result.xml", "w") do |f|
+	  f.write(output)
+	end
+end 
+
+$path = ""
+if ( ! ARGV.empty? ) 
+	$path = ARGV[0]
 end
-output += "</snippets>"
 
-File.open("result.xml", "w") do |f|
-  f.write(output)
-end
-
+puts snipetDir( $path )
 puts "**** Done, result stored in result.xml, don't forget to change the [language] value ****"
 
